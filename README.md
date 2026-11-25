@@ -1,46 +1,63 @@
-# Getting Started with Create React App
+# ❌⭕ Tic Tac Toe
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A neon arcade-style Tic Tac Toe game built with **React + TypeScript**. Play with a friend on the same screen or take on the computer.
 
-## Available Scripts
+## ✨ Features
 
-In the project directory, you can run:
+- 👫 **Two modes**: vs Friend or vs Computer
+- 🤖 **Smart computer**: wins when it can, blocks when you're about to win
+- 🏆 **Live scoreboard**: wins and draws tracked across rounds
+- 🎉 **Winning line glow** and confetti celebration
+- 🤝 **Draw detection**
+- 📱 **Fully responsive**: works on phone, tablet and desktop
+- ♿ **Keyboard friendly** and respects reduced-motion settings
 
-### `npm start`
+## 🛠️ Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React 18 + TypeScript
+- Create React App
+- Plain CSS (no extra libraries)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🚀 Run Locally
 
-### `npm test`
+```bash
+git clone https://github.com/0081hawkeye-design/TIC-TAC-TOE.git
+cd TIC-TAC-TOE
+npm install
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Open [http://localhost:3000](http://localhost:3000).
 
-### `npm run build`
+## 📦 Build
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm run build
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🌐 Deploy on Vercel
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Push this repo to GitHub
+2. Go to [vercel.com](https://vercel.com) and click **Add New → Project**
+3. Import the `TIC-TAC-TOE` repo
+4. Keep the defaults (Framework: Create React App) and click **Deploy**
 
-### `npm run eject`
+## 📁 Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+src/
+├── App.tsx            # game logic, modes, scoreboard
+├── App.css            # all styling and animations
+└── components/
+    └── Block.tsx      # a single square
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🎮 How to Play
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1. X goes first, then players take turns
+2. Get 3 in a row (horizontal, vertical or diagonal) to win
+3. Hit **Play again** for a new round, or **Reset scores** to start fresh
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 🙌 Credits
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Built while learning React from [Piyush Garg's ReactJS series](https://www.youtube.com/playlist?list=PLinedj3B30sBm5wu3ixPRQ0gDqHJUlxQf).

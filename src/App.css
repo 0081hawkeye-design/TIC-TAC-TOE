@@ -1,23 +1,145 @@
-.block {
-    border: 2px solid;
-    height: 100px;
-    width: 100px;
-    cursor: pointer;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-size: 35px;
-    font-weight: bold;
+/* ---------- colors (change these to re-theme the game) ---------- */
+:root {
+  --bg1: #1b1145;
+  --bg2: #3b1a6e;
+  --x: #22d3ee; /* cyan for X */
+  --o: #f472b6; /* pink for O */
+  --gold: #fbbf24; /* winner glow */
+  --card: rgba(255, 255, 255, 0.08);
+  --line: rgba(255, 255, 255, 0.18);
 }
 
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: #fff;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 20% 10%, var(--bg2), var(--bg1) 70%);
+  background-attachment: fixed;
+}
+
+.app {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ---------- title ---------- */
+.title {
+  margin: 0;
+  font-size: clamp(2.2rem, 8vw, 3.6rem);
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+.tx { color: var(--x); text-shadow: 0 0 18px var(--x); }
+.tm { color: #fff; }
+.to { color: var(--o); text-shadow: 0 0 18px var(--o); }
+
+/* ---------- buttons ---------- */
+button { font-family: inherit; }
+.modes, .actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.modes button, .actions button {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+}
+.modes button:hover, .actions button:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.16); }
+.modes button.active, .actions button.primary {
+  background: linear-gradient(135deg, var(--x), var(--o));
+  border-color: transparent;
+  color: #1b1145;
+}
+button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+/* ---------- scoreboard ---------- */
+.scoreboard { display: flex; gap: 12px; width: min(92vw, 420px); }
+.score {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 6px;
+  border-radius: 14px;
+  background: var(--card);
+  border: 2px solid var(--line);
+  transition: all 0.25s;
+}
+.score span { font-size: 0.8rem; opacity: 0.85; }
+.score strong { font-size: 1.8rem; }
+.score.x.active { border-color: var(--x); box-shadow: 0 0 20px var(--x); transform: scale(1.06); }
+.score.o.active { border-color: var(--o); box-shadow: 0 0 20px var(--o); transform: scale(1.06); }
+
+/* ---------- board ---------- */
 .board {
-    padding: 20px;
-
+  --size: min(26vw, 120px); /* square size, shrinks on phones */
+  display: grid;
+  grid-template-columns: repeat(3, var(--size));
+  gap: 10px;
+  padding: 14px;
+  border-radius: 22px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+.block {
+  width: var(--size);
+  height: var(--size);
+  border-radius: 16px;
+  border: 2px solid var(--line);
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+  font-size: calc(var(--size) * 0.55);
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s, background 0.15s;
+}
+.block:not(:disabled):hover { transform: scale(1.06); background: rgba(255, 255, 255, 0.14); }
+.block:disabled { cursor: not-allowed; }
+.block.X { color: var(--x); text-shadow: 0 0 16px var(--x); border-color: var(--x); }
+.block.O { color: var(--o); text-shadow: 0 0 16px var(--o); border-color: var(--o); }
+.mark { animation: pop 0.3s ease-out; }
+.block.win {
+  background: rgba(251, 191, 36, 0.25);
+  border-color: var(--gold);
+  box-shadow: 0 0 24px var(--gold);
+  animation: pulse 0.8s infinite alternate;
 }
 
-.row {
-    display: flex;
+/* ---------- status text ---------- */
+.status { margin: 0; font-size: 1.3rem; font-weight: 700; min-height: 1.6em; text-align: center; }
+.status.won.X { color: var(--x); text-shadow: 0 0 14px var(--x); }
+.status.won.O { color: var(--o); text-shadow: 0 0 14px var(--o); }
 
+/* ---------- confetti ---------- */
+.confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+.confetti i {
+  position: absolute;
+  top: -20px;
+  width: 10px;
+  height: 16px;
+  border-radius: 2px;
+  animation: fall 2.6s linear infinite;
+}
+
+/* ---------- animations ---------- */
+@keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes pulse { from { transform: scale(1); } to { transform: scale(1.08); } }
+@keyframes fall { to { transform: translateY(110vh) rotate(540deg); } }
+
+/* respect people who turn animations off */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
